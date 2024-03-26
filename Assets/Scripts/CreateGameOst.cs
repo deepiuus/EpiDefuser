@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CreateGameOst : MonoBehaviour
 {
@@ -11,5 +12,19 @@ public class CreateGameOst : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.Play();
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex == 0 || scene.buildIndex == 1)
+        {
+            audioSource.Stop();
+        }
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
