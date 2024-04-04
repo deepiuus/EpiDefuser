@@ -12,6 +12,21 @@ EditorBuildSettings:
     path: Assets/Scenes/Games.unity
     guid: a5552f1effb0c8d4495b1c50b464baf8
   - enabled: 1
-    path: Assets/Scenes/Bomb Defusing.unity
+    path: Assets/Scenes/Lionel.unity
     guid: 371f8ef7b3008ac4a9c683285c4e4dc3
+  - enabled: 1
+    path: Assets/Scenes/Darius.unity
+    guid: f541004f358b74e4fbecefc61d4d3135
+  - enabled: 1
+    path: Assets/Scenes/Eric.unity
+    guid: 2ddeddaf6853b09419a3b758f882e297
+  - enabled: 1
+    path: Assets/Scenes/Death.unity
+    guid: 30ec9c4185cf77d46bc6def28f24a9ee
+  - enabled: 1
+    path: Assets/Scenes/Infini.unity
+    guid: 6e3e4be6847890c4e8b9eaa8d0b5bd2b
+  - enabled: 1
+    path: Assets/Scenes/Marvin.unity
+    guid: 90d8c2d5e6c687c4f8bec500fd803a25
   m_configObjects: {}

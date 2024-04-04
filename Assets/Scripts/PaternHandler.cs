@@ -12,6 +12,8 @@ public class PaternHandler : MonoBehaviour
     public GameObject[] lightImages;
     public Sprite lightOn;
     public Sprite lightOff;
+    public int maxTour = 6;
+    private AudioSource audioSource;
     private List<int> activePatternIndices = new List<int>();
     private List<int> playerInputIndices = new List<int>();
 
@@ -21,43 +23,37 @@ public class PaternHandler : MonoBehaviour
         {
             pattern.SetActive(false);
         }
+        audioSource = GetComponent<AudioSource>();
         StartCoroutine(SpawnPatern());
     }
 
     IEnumerator SpawnPatern()
     {
-        for (int tour = 1; tour <= 6; tour++)
+        if (SceneManager.GetActiveScene().buildIndex == 7)
         {
+            yield return StartCoroutine(MarvinPatern());
+        }
+        else
+        {
+            yield return StartCoroutine(BasicPatern());
+        }
+    }
+
+    IEnumerator MarvinPatern()
+    {
+        for (int tour = 1; tour <= maxTour; tour++)
+        {
+            activePatternIndices.Clear();
             bool correctInput = false;
             while (!correctInput)
             {
-                UpdateLightImages(tour);
-                for (int i = 0; i < tour; i++)
-                {
-                    if (i >= activePatternIndices.Count)
-                    {
-                        activePatternIndices.Add(Random.Range(0, paterns.Length));
-                    }
-                    GameObject pattern = paterns[activePatternIndices[i]];
-                    pattern.SetActive(true);
-                    StartCoroutine(DisablePattern(pattern));
-                    yield return new WaitForSeconds(1f);
-                }
-                yield return StartCoroutine(WaitForPlayerInput(tour));
+                yield return StartCoroutine(UpdateImages(tour));
                 correctInput = playerInputIndices.Count == tour;
-                
-                if (lifeSystem.lives <= 0)
-                {
-                    Debug.Log("Game over!");
-                    SceneManager.LoadScene(0);
-                    yield break;
-                }
             }
-
             if (lifeSystem.lives <= 0)
             {
                 Debug.Log("Game over!");
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(5);
                 yield break;
             }
         }
@@ -65,9 +61,55 @@ public class PaternHandler : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    IEnumerator BasicPatern()
+    {
+        for (int tour = 1; tour <= maxTour; tour++)
+        {
+            bool correctInput = false;
+            while (!correctInput)
+            {
+                yield return StartCoroutine(UpdateImages(tour));
+                correctInput = playerInputIndices.Count == tour;
+            }
+            if (lifeSystem.lives <= 0)
+            {
+                Debug.Log("Game over!");
+                SceneManager.LoadScene(5);
+                yield break;
+            }
+        }
+        Debug.Log("You win!");
+        SceneManager.LoadScene(1);
+    }
+
+    IEnumerator UpdateImages(int tour)
+    {
+        UpdateLightImages(tour);
+        for (int i = 0; i < tour; i++)
+        {
+            if (i >= activePatternIndices.Count)
+            {
+                activePatternIndices.Add(Random.Range(0, paterns.Length));
+            }
+            GameObject pattern = paterns[activePatternIndices[i]];
+            pattern.SetActive(true);
+            StartCoroutine(DisablePattern(pattern));
+            yield return new WaitForSeconds(1f);
+        }
+        yield return StartCoroutine(WaitForPlayerInput(tour));
+        bool correctInput = playerInputIndices.Count == tour;      
+        if (lifeSystem.lives <= 0)
+        {
+            Debug.Log("Game over!");
+            SceneManager.LoadScene(5);
+            yield break;
+        }
+    }
+
     public void OnInputButton(int index)
     {
         playerInputIndices.Add(index);
+        audioSource.Play();
     }
 
     IEnumerator WaitForPlayerInput(int tour)
@@ -77,7 +119,6 @@ public class PaternHandler : MonoBehaviour
         {
             yield return null;
         }
-
         for (int i = 0; i < tour; i++)
         {
             if (i >= activePatternIndices.Count || i >= playerInputIndices.Count)
@@ -108,10 +149,13 @@ public class PaternHandler : MonoBehaviour
 
     void UpdateLightImages(int tour)
     {
-        for (int i = 0; i < lightImages.Length; i++)
+        for (int i = 0; i < maxTour; i++)
         {
             Sprite newSprite = i < tour ? lightOn : lightOff;
-            lightImages[i].GetComponent<Image>().sprite = newSprite;
+            if (i < lightImages.Length)
+            {
+                lightImages[i].GetComponent<Image>().sprite = newSprite;
+            }
         }
     }
 }

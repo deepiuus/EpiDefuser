@@ -11,7 +11,6 @@ public class CreateGameOst : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.Play();
-        DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 

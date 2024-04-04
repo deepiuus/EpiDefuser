@@ -8,9 +8,9 @@ public class ButtonSound : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
         created = true;
         audioSource = GetComponent<AudioSource>();
+        DontDestroyOnLoad(gameObject);
     }
 
     public void OnButtonClick()

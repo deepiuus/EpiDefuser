@@ -7,7 +7,9 @@ using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour
 {
     public Text timerText;
-    private float timeLeft = 61f;
+    public AudioSource audioSource;
+    public float timeLeft = 150f;
+    private bool created = false;
 
     void Update()
     {
@@ -18,17 +20,23 @@ public class Timer : MonoBehaviour
             string seconds = Mathf.FloorToInt(timeLeft % 60).ToString("00");
 
             timerText.text = minutes + ":" + seconds;
+
+            if (timeLeft <= 14.5f && !created)
+            {
+                audioSource.Play();
+                created = true;
+            }
         }
         else
         {
             timerText.text = "00:00";
+            audioSource.Stop();
             GameOver();
         }
     }
 
     void GameOver()
     {
-        Debug.Log("Game over!");
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(5);
     }
 }

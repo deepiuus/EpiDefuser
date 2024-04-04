@@ -454,12 +454,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1817485478}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 3
+        m_MethodName: LoadScene0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -490,9 +490,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 150
   minX: 175
-  maxX: 740
+  maxX: 745
   minY: 35
-  maxY: 345
+  maxY: 365
 --- !u!1 &810262658
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,7 +528,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 715, y: 383}
+  m_SizeDelta: {x: 715, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &810262661
 MonoBehaviour:

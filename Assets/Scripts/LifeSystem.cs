@@ -24,7 +24,7 @@ public class LifeSystem : MonoBehaviour
 
         if (lives <= 0)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(5);
         }
     }
 
